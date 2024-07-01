@@ -24,6 +24,9 @@ class ProfileStatus
     #[ORM\OneToMany(targetEntity: Profile::class, mappedBy: 'status')]
     private Collection $profiles;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $orderStep = null;
+
     public function __construct()
     {
         $this->profiles = new ArrayCollection();
@@ -72,6 +75,18 @@ class ProfileStatus
                 $profile->setStatus(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOrderStep(): ?string
+    {
+        return $this->orderStep;
+    }
+
+    public function setOrderStep(?string $orderStep): static
+    {
+        $this->orderStep = $orderStep;
 
         return $this;
     }
