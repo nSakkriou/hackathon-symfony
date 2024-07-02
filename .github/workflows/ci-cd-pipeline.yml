@@ -47,5 +47,5 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker buildx build -t nsakkriou/${{ secrets.CI_REGISTRY_IMAGE }} .
-          docker tag nsakkriou/${{ secrets.CI_REGISTRY_IMAGE }} ghcr.io/nsakkriou/${{ secrets.CI_REGISTRY_IMAGE }
+          docker tag nsakkriou/${{ secrets.CI_REGISTRY_IMAGE }} ghcr.io/nsakkriou/${{ secrets.CI_REGISTRY_IMAGE }}
           docker push ghcr.io/nsakkriou/${{ secrets.CI_REGISTRY_IMAGE }}
