@@ -16,6 +16,18 @@ class PopUpMessageRepository extends ServiceEntityRepository
         parent::__construct($registry, PopUpMessage::class);
     }
 
+    public function findLatestActiveMessage()
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('p.messageText as message')
+            ->where('p.endedAt IS NULL OR p.endedAt > :now')
+            ->setParameter('now', new \DateTime())
+            ->orderBy('p.startedAt', 'DESC')
+            ->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return PopUpMessage[] Returns an array of PopUpMessage objects
     //     */

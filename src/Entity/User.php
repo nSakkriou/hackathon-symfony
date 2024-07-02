@@ -2,13 +2,18 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Attribute\Groups;
 
+#[ApiResource(
+    normalizationContext: ['groups' => ['user:read']]
+)]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -16,47 +21,56 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column]#[Groups(['user:read', 'team:read', 'profile:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['user:read', 'user:write', 'team:read'])]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
+    #[Groups(['user:read:full'])]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups(['user:read:full', 'user:write'])]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['user:read', 'user:write', 'team:read', 'profile:read'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['user:read', 'user:write', 'team:read', 'profile:read'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(['user:read', 'user:write', 'team:read'])]
     private ?string $phone = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: true)]
+    #[Groups(['user:read'])]
     private ?Team $team = null;
 
     /**
      * @var Collection<int, Profile>
      */
     #[ORM\OneToMany(targetEntity: Profile::class, mappedBy: 'cooptedBy')]
+    #[Groups(['user:read:full'])]
     private Collection $profiles;
 
     /**
      * @var Collection<int, ProfileAction>
      */
     #[ORM\OneToMany(targetEntity: ProfileAction::class, mappedBy: 'userId')]
+    #[Groups(['user:read:full'])]
     private Collection $profileActions;
 
     public function __construct()

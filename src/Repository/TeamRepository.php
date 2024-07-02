@@ -16,6 +16,19 @@ class TeamRepository extends ServiceEntityRepository
         parent::__construct($registry, Team::class);
     }
 
+    public function findPointsByTeam()
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.id', 't.name', 'SUM(act.points) AS totalPoints')
+            ->join('t.users', 'u')
+            ->join('u.profileActions', 'pa')
+            ->join('pa.actionType', 'act')
+            ->groupBy('t.id')
+            ->orderBy('totalPoints', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Team[] Returns an array of Team objects
     //     */
