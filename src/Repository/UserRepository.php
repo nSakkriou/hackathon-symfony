@@ -33,6 +33,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    public function findPointsByUser()
+    {
+        $qb = $this->entityManager->createQueryBuilder();
+
+        $qb->select('user.id', 'user.firstname', 'user.lastname', 'user.team', 'SUM(actionType.points) AS totalPoints')
+            ->from('App\Entity\User', 'user')
+            ->join('user.profileActions', 'profileAction')
+            ->join('profileAction.actionType', 'actionType')
+            ->groupBy('user.id');
+
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
     //    /**
     //     * @return User[] Returns an array of User objects
     //     */
