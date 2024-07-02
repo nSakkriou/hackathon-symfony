@@ -19,13 +19,13 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
 
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libzip-dev unzip
-          sudo apt-get install -y php8.1-zip
+          sudo apt-get install -y php8.2-zip
           composer install
 
 #  release:
