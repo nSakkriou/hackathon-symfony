@@ -12,66 +12,71 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ApiResource(
-    normalizationContext: ['groups' => ['user:read']]
+    normalizationContext: ['groups' => [self::USER_READ]]
 )]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    private const TEAM_READ = 'team:read';
+    private const USER_READ = 'user:read';
+    private const USER_READ_FULL = 'user:read:full';
+    private const USER_WRITE = 'user:write';
+    private const PROFILE_READ = self::USER_WRITE;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['user:read', 'team:read', 'profile:read'])]
+    #[Groups([self::USER_READ, self::TEAM_READ, self::PROFILE_READ])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['user:read', 'user:write', 'team:read'])]
+    #[Groups([self::USER_READ, self::USER_WRITE, self::TEAM_READ])]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
-    #[Groups(['user:read:full'])]
+    #[Groups([self::USER_READ_FULL])]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Groups(['user:read:full', 'user:write'])]
+    #[Groups([self::USER_READ_FULL, self::USER_WRITE])]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:read', 'user:write', 'team:read', 'profile:read'])]
+    #[Groups([self::USER_READ, self::USER_WRITE, self::TEAM_READ, self::PROFILE_READ])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:read', 'user:write', 'team:read', 'profile:read'])]
+    #[Groups([self::USER_READ, self::USER_WRITE, self::TEAM_READ, self::PROFILE_READ])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 10, nullable: true)]
-    #[Groups(['user:read', 'user:write', 'team:read'])]
+    #[Groups([self::USER_READ, self::USER_WRITE, self::TEAM_READ])]
     private ?string $phone = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     #[ORM\JoinColumn(nullable: true)]
-    #[Groups(['user:read'])]
+    #[Groups([self::USER_READ])]
     private ?Team $team = null;
 
     /**
      * @var Collection<int, Profile>
      */
     #[ORM\OneToMany(targetEntity: Profile::class, mappedBy: 'cooptedBy')]
-    #[Groups(['user:read:full'])]
+    #[Groups([self::USER_READ_FULL])]
     private Collection $profiles;
 
     /**
      * @var Collection<int, ProfileAction>
      */
     #[ORM\OneToMany(targetEntity: ProfileAction::class, mappedBy: 'userId')]
-    #[Groups(['user:read:full'])]
+    #[Groups([self::USER_READ_FULL])]
     private Collection $profileActions;
 
     public function __construct()

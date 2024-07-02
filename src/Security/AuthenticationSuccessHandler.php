@@ -2,8 +2,6 @@
 
 namespace App\Security;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
-use Lexik\Bundle\JWTAuthenticationBundle\Response\JWTAuthenticationSuccessResponse;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -20,8 +18,6 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
     {
         $this->jwtManager = $jwtManager;
     }
-
-
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
     {
