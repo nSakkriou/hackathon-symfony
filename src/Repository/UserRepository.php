@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\ActionType;
+use App\Entity\ProfileAction;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -14,7 +17,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, User::class);
     }
@@ -33,18 +36,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * Gets point for all user
+     *
+     * @return mixed
+     */
     public function findPointsByUser()
     {
-        $qb = $this->entityManager->createQueryBuilder();
-
-        $qb->select('user.id', 'user.firstname', 'user.lastname', 'user.team', 'SUM(actionType.points) AS totalPoints')
-            ->from('App\Entity\User', 'user')
-            ->join('user.profileActions', 'profileAction')
-            ->join('profileAction.actionType', 'actionType')
-            ->groupBy('user.id');
-
-        $query = $qb->getQuery();
-        return $query->getResult();
+        return $this->createQueryBuilder('u')
+            ->select('u.id', 'u.firstname', 'u.lastname', 't.id as teamId', 't.name as teamName', 'SUM(act.points) AS totalPoints')
+            ->join('u.profileActions', 'pa')
+            ->join('u.team', 't')
+            ->join('pa.actionType', 'act')
+            ->groupBy('u.id')
+            ->orderBy('totalPoints', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 
     //    /**

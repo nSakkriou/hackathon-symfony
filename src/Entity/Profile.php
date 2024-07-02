@@ -2,43 +2,57 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ProfileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
+#[ApiResource(
+    normalizationContext: ['groups' => ['profile:read']]
+)]
 #[ORM\Entity(repositoryClass: ProfileRepository::class)]
 class Profile
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['profile:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['profile:read'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['profile:read'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 10, nullable: true)]
+    #[Groups(['profile:read'])]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255, unique: true)]
+    #[Groups(['profile:read'])]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups(['profile:read'])]
     private ?bool $acquaintancePro = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['profile:read'])]
     private ?string $linkedin = null;
 
     #[ORM\ManyToOne(inversedBy: 'profiles')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['profile:read'])]
     private ?User $cooptedBy = null;
 
     #[ORM\ManyToOne(inversedBy: 'profiles')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['profile:read'])]
     private ?ProfileStatus $status = null;
 
     /**
