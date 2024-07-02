@@ -13,7 +13,6 @@ class HomeService
         private UserRepository $userRepository,
         private TeamRepository $teamRepository,
         private SerializerInterface $serializer,
-        private ProfileRepository $profileRepository,
     )
     {
     }
@@ -26,7 +25,7 @@ class HomeService
         ];
     }
 
-    public function getEntitiesFromRepoAndGroup($entities, $group)
+    public function getEntitiesFromRepoAndGroup($entities, $group): mixed
     {
         $serializedEntities = $this->serializer->serialize($entities, 'json', ['groups' => $group]);
 

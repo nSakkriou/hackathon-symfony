@@ -10,49 +10,51 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ApiResource(
-    normalizationContext: ['groups' => ['profile:read']]
+    normalizationContext: ['groups' => [self::PROFILE_READ]]
 )]
 #[ORM\Entity(repositoryClass: ProfileRepository::class)]
 class Profile
 {
+
+    private const PROFILE_READ = 'profile:read';
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['profile:read'])]
+    #[Groups([self::PROFILE_READ])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['profile:read'])]
+    #[Groups([self::PROFILE_READ])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['profile:read'])]
+    #[Groups([self::PROFILE_READ])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 10, nullable: true)]
-    #[Groups(['profile:read'])]
+    #[Groups([self::PROFILE_READ])]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    #[Groups(['profile:read'])]
+    #[Groups([self::PROFILE_READ])]
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(['profile:read'])]
+    #[Groups([self::PROFILE_READ])]
     private ?bool $acquaintancePro = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['profile:read'])]
+    #[Groups([self::PROFILE_READ])]
     private ?string $linkedin = null;
 
     #[ORM\ManyToOne(inversedBy: 'profiles')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['profile:read'])]
+    #[Groups([self::PROFILE_READ])]
     private ?User $cooptedBy = null;
 
     #[ORM\ManyToOne(inversedBy: 'profiles')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['profile:read'])]
+    #[Groups([self::PROFILE_READ])]
     private ?ProfileStatus $status = null;
 
     /**

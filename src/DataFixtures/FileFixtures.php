@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\File;
-use App\Entity\Profile;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
