@@ -6,7 +6,7 @@ on:
       - main
       - dev
       - feature/ci-cd
-      - 'release/**'
+#      - 'release/**'
 
 jobs:
   build:
