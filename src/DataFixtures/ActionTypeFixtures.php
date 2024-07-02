@@ -5,14 +5,11 @@ namespace App\DataFixtures;
 use App\Entity\ActionType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
 
 class ActionTypeFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create();
-
         $actions = [
             [
                 "name" => "NO GO",

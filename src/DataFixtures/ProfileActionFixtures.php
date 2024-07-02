@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Profile;
 use App\Entity\ProfileAction;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
