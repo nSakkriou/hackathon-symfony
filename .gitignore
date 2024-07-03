@@ -9,7 +9,7 @@
 /var/
 /vendor/
 /.idea/
-/uploads/
+/public/uploads/
 ###< symfony/framework-bundle ###
 
 ###> lexik/jwt-authentication-bundle ###
