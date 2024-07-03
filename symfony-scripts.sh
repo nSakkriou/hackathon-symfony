@@ -1,4 +1,8 @@
+#!/bin/bash
+
 if [ "$APP_ENV" != "build" ]; then
-    symfony-cmd cache:clear
-    symfony-cmd assets:install %PUBLIC_DIR%
+    php bin/console cache:clear
+    php bin/console assets:install %PUBLIC_DIR%
+else
+    echo "Skipping cache:clear and assets:install in build environment."
 fi
