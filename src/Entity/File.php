@@ -4,19 +4,24 @@ namespace App\Entity;
 
 use App\Repository\FileRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 class File
 {
+    private const PROFILE_WRITE = 'profile:write';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups([self::PROFILE_WRITE])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups([self::PROFILE_WRITE])]
     private ?string $path = null;
 
     #[ORM\ManyToOne(inversedBy: 'files')]
