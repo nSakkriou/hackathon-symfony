@@ -71,12 +71,10 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts",
-            "bash symfony-scripts.sh"
+            "@auto-scripts"
         ],
         "post-update-cmd": [
-            "@auto-scripts",
-            "bash symfony-scripts.sh"
+            "@auto-scripts"
         ]
     },
     "conflict": {
