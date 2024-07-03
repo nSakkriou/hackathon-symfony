@@ -6,16 +6,21 @@ use App\Repository\ProfileStatusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: ProfileStatusRepository::class)]
 class ProfileStatus
 {
+
+    private const PROFILE_READ = "profile:read";
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups([self::PROFILE_READ])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups([self::PROFILE_READ])]
     private ?string $name = null;
 
     /**
@@ -25,6 +30,7 @@ class ProfileStatus
     private Collection $profiles;
 
     #[ORM\Column(nullable: true)]
+    #[Groups([self::PROFILE_READ])]
     private ?int $orderStep = null;
 
     public function __construct()

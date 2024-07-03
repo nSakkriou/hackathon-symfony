@@ -16,28 +16,16 @@ class PopUpMessageRepository extends ServiceEntityRepository
         parent::__construct($registry, PopUpMessage::class);
     }
 
-    //    /**
-    //     * @return PopUpMessage[] Returns an array of PopUpMessage objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findLatestActiveMessage(): mixed
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('p.messageText as message')
+            ->where('p.endedAt IS NULL OR p.endedAt > :now')
+            ->setParameter('now', new \DateTime())
+            ->orderBy('p.startedAt', 'DESC')
+            ->setMaxResults(1);
 
-    //    public function findOneBySomeField($value): ?PopUpMessage
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
 }
