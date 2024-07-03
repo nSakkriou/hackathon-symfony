@@ -66,8 +66,8 @@
     },
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "cache:clear": "if [ \"$APP_ENV\" != \"build\" ]; then symfony-cmd cache:clear; fi",
+            "assets:install %PUBLIC_DIR%": "if [ \"$APP_ENV\" != \"build\" ]; then symfony-cmd assets:install %PUBLIC_DIR%; fi"
         },
         "post-install-cmd": [
             "@auto-scripts"
