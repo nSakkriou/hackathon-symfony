@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\FileRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 use ApiPlatform\Metadata\ApiResource;
 
 #[ApiResource(
@@ -12,6 +13,7 @@ use ApiPlatform\Metadata\ApiResource;
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 class File
 {
+    private const PROFILE_WRITE = 'profile:write';
     private const PROFILE_READ = 'profile:read';
     
     #[ORM\Id]
@@ -20,9 +22,11 @@ class File
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups([self::PROFILE_WRITE])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups([self::PROFILE_WRITE])]
     private ?string $path = null;
 
     #[ORM\ManyToOne(inversedBy: 'files')]
