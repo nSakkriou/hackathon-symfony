@@ -17,6 +17,7 @@ class Profile
 {
 
     private const PROFILE_READ = 'profile:read';
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
