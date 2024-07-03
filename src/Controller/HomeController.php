@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\PopUpMessageRepository;
 use App\Repository\ProfileRepository;
+use App\Repository\ProfileStatusRepository;
 use App\Repository\TeamRepository;
 use App\Repository\UserRepository;
 use App\Service\HomeService;
@@ -18,6 +19,7 @@ class HomeController extends AbstractController
         private HomeService $homeService,
         private TeamRepository $teamRepository,
         private ProfileRepository $profileRepository,
+        private ProfileStatusRepository $profileStatusRepository,
         private PopUpMessageRepository $popUpMessageRepository,
     )
     {
@@ -31,6 +33,9 @@ class HomeController extends AbstractController
                 $this->profileRepository->findAll(),
                 'profile:read'
             ),
+            'orderStepMax' => $this->profileStatusRepository->findBy(
+                [],['orderStep' => 'DESC'],1
+            )[0]->getOrderStep()+1,
             'rankings' => $this->homeService->getRankings(),
             'popUpMessage' => $this->popUpMessageRepository->findLatestActiveMessage()
         ], 200, []);
@@ -52,6 +57,9 @@ class HomeController extends AbstractController
                 $this->profileRepository->findAll(),
                 'profile:read'
             ),
+            'orderStepMax' => $this->profileStatusRepository->findBy(
+                [],['orderStep' => 'DESC'],1
+            )[0]->getOrderStep()+1,
             'rankings' => $this->homeService->getRankings(),
             'popUpMessage' => $this->popUpMessageRepository->findLatestActiveMessage()
         ]);
