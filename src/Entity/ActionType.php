@@ -6,10 +6,16 @@ use App\Repository\ActionTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
 
+#[ApiResource(
+    normalizationContext: ['groups' => [self::PROFILE_READ]]
+)]
 #[ORM\Entity(repositoryClass: ActionTypeRepository::class)]
 class ActionType
 {
+    private const PROFILE_READ = 'profile:read';
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

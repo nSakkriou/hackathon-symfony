@@ -4,10 +4,16 @@ namespace App\Entity;
 
 use App\Repository\FileRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
 
+#[ApiResource(
+    normalizationContext: ['groups' => [self::PROFILE_READ]]
+)]
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 class File
 {
+    private const PROFILE_READ = 'profile:read';
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
