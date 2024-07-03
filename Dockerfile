@@ -10,10 +10,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN a2enmod rewrite
 WORKDIR /var/www/html
 COPY . .
+COPY .env.prod .env
 RUN mkdir -p var/cache var/log public/bundles && \
     chown -R www-data:www-data var/cache var/log public/bundles
 USER www-data
-RUN composer install --no-interaction --optimize-autoloader
+RUN composer install --no-interaction --optimize-autoloader --ignore-platform-reqs --prefer-dist --no-progress --no-suggest --no-scripts
 USER root
 RUN chown -R www-data:www-data vendor var/cache var/log public/bundles
 EXPOSE 80
