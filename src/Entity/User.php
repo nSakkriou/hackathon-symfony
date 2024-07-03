@@ -23,15 +23,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private const USER_READ = 'user:read';
     private const USER_READ_FULL = 'user:read:full';
     private const USER_WRITE = 'user:write';
-    private const PROFILE_READ = self::USER_WRITE;
+    private const PROFILE_READ = 'profile:read';
+    private const PROFILE_WRITE = 'profile:write';
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups([self::USER_READ, self::TEAM_READ, self::PROFILE_READ])]
+    #[Groups([self::USER_READ, self::TEAM_READ, self::PROFILE_READ, self::PROFILE_WRITE])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups([self::USER_READ, self::USER_WRITE, self::TEAM_READ])]
+    #[Groups([self::USER_READ, self::USER_WRITE, self::TEAM_READ, self::PROFILE_WRITE])]
     private ?string $email = null;
 
     /**
