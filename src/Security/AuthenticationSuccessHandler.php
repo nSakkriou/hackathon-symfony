@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterface
 {
-    private $jwtManager;
+    private JWTTokenManagerInterface $jwtManager;
 
     public function __construct(JWTTokenManagerInterface $jwtManager)
     {
