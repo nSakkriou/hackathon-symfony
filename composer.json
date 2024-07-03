@@ -66,14 +66,14 @@
     },
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "if [ \"$APP_ENV\" != \"build\" ]; then symfony-cmd cache:clear; fi",
-            "assets:install %PUBLIC_DIR%": "if [ \"$APP_ENV\" != \"build\" ]; then symfony-cmd assets:install %PUBLIC_DIR%; fi"
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "bash symfony-scripts.sh"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
+            "bash symfony-scripts.sh"
         ]
     },
     "conflict": {
