@@ -37,8 +37,8 @@ security:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/home, roles: ROLE_USER }
         - { path: ^/api/rankings, roles: ROLE_USER }
-        - { path: ^//api/myprofile, roles: ROLE_USER }
-        - { path: ^//api/profiles, roles: ROLE_USER, methods: [POST] }
+        - { path: ^/api/myprofile, roles: ROLE_USER }
+        - { path: ^/api/profiles, roles: ROLE_USER, methods: [POST] }
         - { path: ^/api/, roles: ROLE_HR }
 
     role_hierarchy:
