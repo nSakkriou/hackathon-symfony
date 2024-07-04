@@ -42,7 +42,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findPointsByUser(): mixed
     {
         return $this->createQueryBuilder('u')
-            ->select('u.id', 'u.firstname', 'u.lastname', 't.id as teamId', 't.name as teamName', 'SUM(act.points) AS totalPoints')
+            ->select(
+        'u.id',
+                'u.firstname',
+                'u.lastname',
+                't.id as teamId',
+                't.name as teamName',
+                'SUM(act.points) AS totalPoints'
+            )
             ->join('u.profileActions', 'pa')
             ->join('u.team', 't')
             ->join('pa.actionType', 'act')

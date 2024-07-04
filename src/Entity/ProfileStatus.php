@@ -9,20 +9,25 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use ApiPlatform\Metadata\ApiResource;
 
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => [self::PROFILE_STATUS_READ]],
+    denormalizationContext: ['groups' => [self::PROFILE_STATUS_WRITE]]
+)]
 #[ORM\Entity(repositoryClass: ProfileStatusRepository::class)]
 class ProfileStatus
 {
 
     private const PROFILE_READ = "profile:read";
+    private const PROFILE_STATUS_READ = "profile-status:read";
+    private const PROFILE_STATUS_WRITE = "profile-status:write";
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups([self::PROFILE_READ])]
+    #[Groups([self::PROFILE_READ, self::PROFILE_STATUS_READ])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups([self::PROFILE_READ])]
+    #[Groups([self::PROFILE_READ, self::PROFILE_STATUS_READ, self::PROFILE_STATUS_WRITE])]
     private ?string $name = null;
 
     /**
@@ -32,7 +37,7 @@ class ProfileStatus
     private Collection $profiles;
 
     #[ORM\Column(nullable: true)]
-    #[Groups([self::PROFILE_READ])]
+    #[Groups([self::PROFILE_READ, self::PROFILE_STATUS_READ, self::PROFILE_STATUS_WRITE])]
     private ?int $orderStep = null;
 
     public function __construct()
