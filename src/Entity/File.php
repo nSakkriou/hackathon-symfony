@@ -7,15 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use ApiPlatform\Metadata\ApiResource;
 
-#[ApiResource(
-    normalizationContext: ['groups' => [self::PROFILE_READ]]
-)]
+#[ApiResource]
 #[ORM\Entity(repositoryClass: FileRepository::class)]
 class File
 {
     private const PROFILE_WRITE = 'profile:write';
-    private const PROFILE_READ = 'profile:read';
-    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

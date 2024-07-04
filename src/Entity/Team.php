@@ -9,14 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use ApiPlatform\Metadata\ApiResource;
 
-#[ApiResource(
-    normalizationContext: ['groups' => [self::PROFILE_READ]]
-)]
+#[ApiResource]
 #[ORM\Entity(repositoryClass: TeamRepository::class)]
 class Team
 {
-    private const PROFILE_READ = 'profile:read';
-    
     private const TEAM_READ = 'team:read';
     private const TEAM_WRITE = 'team:write';
     private const USER_READ = 'user:read';
