@@ -27,6 +27,7 @@ class Profile
 {
 
     private const PROFILE_READ = 'profile:read';
+    
     private const PROFILE_WRITE = 'profile:write';
     #[ORM\Id]
     #[ORM\GeneratedValue]
