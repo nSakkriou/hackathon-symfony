@@ -18,6 +18,7 @@ class PopUpMessageFixtures extends Fixture
 
         for ($i = 0; $i < 5; $i++) {
             $popUpMessage = new PopUpMessage();
+            $popUpMessage->setTitle($faker->sentence($nbWords = 6, $variableNbWords = true));
             $popUpMessage->setMessageText($faker->paragraph);
             $popUpMessage->setStartedAt(new \DateTimeImmutable($faker->dateTimeThisYear->format('Y-m-d')));
             $popUpMessage->setEndedAt(new \DateTimeImmutable($faker->dateTimeThisYear->format('Y-m-d')));
