@@ -20,6 +20,7 @@ class UserController extends AbstractController
     {
         return new JsonResponse([
             'id' => $this->security->getToken()->getUser()->getId(),
+            'teamId' => $this->security->getToken()->getUser()->getTeam()->getId()
         ], 200, []);
     }
 }
