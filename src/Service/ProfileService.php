@@ -27,7 +27,7 @@ class ProfileService
         $profile->setPhone($request->request->get('phone'));
         $profile->setAcquaintancePro($request->request->get('acquaintancePro'));
         $profile->setLinkedin($request->request->get('linkedin'));
-        $profile->setCooptedBy($this->security->getUser());
+        $profile->setCooptedBy($this->security->getToken()->getUser());
 
         $profile->setStatus(
             $this->profileStatusRepository->findBy([],['orderStep' => 'ASC'], 1)[0]
