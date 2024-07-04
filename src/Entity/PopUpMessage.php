@@ -6,9 +6,7 @@ use App\Repository\PopUpMessageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 
-#[ApiResource(
-    normalizationContext: ['groups' => [self::PROFILE_READ]]
-)]
+#[ApiResource]
 #[ORM\Entity(repositoryClass: PopUpMessageRepository::class)]
 class PopUpMessage
 {

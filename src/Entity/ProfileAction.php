@@ -6,14 +6,10 @@ use App\Repository\ProfileActionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 
-#[ApiResource(
-    normalizationContext: ['groups' => [self::PROFILE_READ]]
-)]
+#[ApiResource]
 #[ORM\Entity(repositoryClass: ProfileActionRepository::class)]
 class ProfileAction
 {
-    private const PROFILE_READ = 'profile:read';
-    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

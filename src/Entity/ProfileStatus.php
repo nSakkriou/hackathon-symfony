@@ -9,9 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 use ApiPlatform\Metadata\ApiResource;
 
-#[ApiResource(
-    normalizationContext: ['groups' => [self::PROFILE_READ]]
-)]
+#[ApiResource]
 #[ORM\Entity(repositoryClass: ProfileStatusRepository::class)]
 class ProfileStatus
 {
