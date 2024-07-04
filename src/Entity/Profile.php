@@ -61,7 +61,7 @@ class Profile
 
     #[ORM\ManyToOne(inversedBy: 'profiles')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups([self::PROFILE_READ, self::PROFILE_WRITE])]
+    #[Groups([self::PROFILE_READ])]
     private ?User $cooptedBy = null;
 
     #[ORM\ManyToOne(inversedBy: 'profiles')]
