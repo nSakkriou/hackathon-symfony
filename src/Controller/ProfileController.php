@@ -21,7 +21,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ProfileController extends AbstractController
 {
 
-    #[Route('/api/profile', name: 'new_profile', methods: ['POST'])]
+    #[Route('/api/profiles', name: 'new_profile', methods: ['POST'])]
     public function new(
         Request $request,
         ProfileService $profileService,

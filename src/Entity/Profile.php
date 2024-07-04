@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Controller\ProfileController;
 use App\Repository\ProfileRepository;
@@ -17,7 +18,8 @@ use Symfony\Component\Serializer\Attribute\Groups;
             uriTemplate: 'profile',
             controller: ProfileController::class,
             name: 'new_profile',
-        )
+        ),
+        new GetCollection()
     ],
     normalizationContext: ['groups' => [self::PROFILE_READ]],
     denormalizationContext: ['groups' => [self::PROFILE_WRITE]]
